@@ -1,0 +1,12 @@
+# Archivos temporales de Excel
+~$*
+
+# Logs y salidas de ejecución
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
