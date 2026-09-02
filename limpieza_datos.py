@@ -1,22 +1,4 @@
-"""
-Cleaning of the student-dropout dataset (Insighted 2/2025).
-
-Produces two dataframes:
-  - `scaled_data`: numeric and standardized (mean 0, std 1), missing values not
-    yet imputed.
-  - `data`: the above after imputing the NaNs with KNN; standardized, no nulls.
-
-Rules applied:
-  - No column is dropped without a reason: each one is recorded in `drop_reasons`.
-  - The date column is dropped and open-ended questions are ignored.
-  - Columns with more than 50% nulls are dropped outright.
-  - Scales are turned into numbers; nominal variables go to one-hot.
-  - Data is standardized before imputing; then KNNImputer in a SINGLE call.
-  - PCA is fitted on `data`; projection and cumulative-variance plots saved as PNGs.
-"""
-
 from pathlib import Path
-
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -148,6 +130,7 @@ pca = PCA()
 coords = pca.fit_transform(features)
 var_pct = pca.explained_variance_ratio_ * 100
 cum_var = var_pct.cumsum()
+print(f'\nPCA: {len(var_pct)} componentes, varianza explicada: {cum_var[-1]:.1f}%')
 n_90 = int((cum_var < 90).sum() + 1)
 print(f'\nPCA: PC1 {var_pct[0]:.1f}% + PC2 {var_pct[1]:.1f}% = '
       f'{cum_var[1]:.1f}% de la varianza')
