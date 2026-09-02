@@ -8,7 +8,7 @@ from sklearn.impute import KNNImputer
 from sklearn.preprocessing import StandardScaler
 
 DATA_FILE = Path(__file__).parent / 'Insighted_2_2025.xlsx'
-PLOT_DIR = DATA_FILE.parent / 'graficas'
+PLOT_DIR = DATA_FILE.parent / 'grafica'
 TARGET = 'probabilidad_abandono'
 MAX_NULL_RATIO = 0.50
 KNN_NEIGHBORS = 5
