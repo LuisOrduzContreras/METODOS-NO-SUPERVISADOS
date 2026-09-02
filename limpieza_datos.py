@@ -67,7 +67,7 @@ for c, reason in drop_reasons.items():
 df = df.drop(columns=list(drop_reasons))
 
 
-ORDINALS = {
+ORDINAL_COLS = {
     'grado_academico': {'Curso Libre': 1, 'Diplomado': 2, 'Técnico': 3, 'Bachillerato': 4,
                         'Licenciatura': 5, 'Maestría': 6, 'Doctorado': 7},
     'etapa_carrera': {'Etpa inicial': 1, 'Etapa intermedia': 2, 'Etapa avanzada': 3},
@@ -89,20 +89,20 @@ ORDINALS = {
         'Sí, ya he investigado opciones concretas': 3},
 }
 
-for column, mapping in ORDINALS.items():
+for column, mapping in ORDINAL_COLS.items():
     unmapped = set(df[column].dropna().unique()) - set(mapping)
     assert not unmapped, f'{column}: categorias sin mapear {unmapped}'
     df[column] = df[column].map(mapping)
 
-print(f'\nOrdinales convertidas a numero: {len(ORDINALS)}')
+print(f'\nOrdinales convertidas a numero: {len(ORDINAL_COLS)}')
 
 
-NOMINALS = ['sexo', 'modalidad_estudio', 'area_conocimiento', 'situacion_laboral',
-            'provincia', find_column('de *financiamiento')]
+NOMINAL_COLS = ['sexo', 'modalidad_estudio', 'area_conocimiento', 'situacion_laboral',
+                'provincia', find_column('de *financiamiento')]
 
 before = df.shape[1]
-df = pd.get_dummies(df, columns=NOMINALS, dtype=float)
-print(f'Nominales a one-hot: {len(NOMINALS)} columnas -> {df.shape[1] - before + len(NOMINALS)}')
+df = pd.get_dummies(df, columns=NOMINAL_COLS, dtype=float)
+print(f'Nominales a one-hot: {len(NOMINAL_COLS)} columnas -> {df.shape[1] - before + len(NOMINAL_COLS)}')
 
 non_numeric = [c for c in df.columns if not pd.api.types.is_numeric_dtype(df[c])]
 print(f'Columnas de texto restantes: {non_numeric}')
