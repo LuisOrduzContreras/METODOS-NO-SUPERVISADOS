@@ -132,7 +132,7 @@ var_pct = pca.explained_variance_ratio_ * 100
 cum_var = var_pct.cumsum()
 print(f'\nPCA: {len(var_pct)} componentes, varianza explicada: {cum_var[-1]:.1f}%')
 n_90 = int((cum_var < 90).sum() + 1)
-print(f'\nPCA: PC1 {var_pct[0]:.1f}% + PC2 {var_pct[1]:.1f}% = '
+print(f'\nVarianza explicada: PC1 {var_pct[0]:.1f}% + PC2 {var_pct[1]:.1f}% = '
       f'{cum_var[1]:.1f}% de la varianza')
 print(f'Componentes para el 90% de la varianza: {n_90} de {len(var_pct)}')
 
@@ -141,13 +141,12 @@ PLOT_DIR.mkdir(exist_ok=True)
 high_risk = (df[TARGET] >= 7).to_numpy()
 fig, ax = plt.subplots(figsize=(8, 6))
 ax.scatter(coords[~high_risk, 0], coords[~high_risk, 1],
-           s=10, alpha=0.5, color='#2c7fb8', label='riesgo bajo (< 7)')
+           s=10, alpha=0.5, color='#2c7fb8')
 ax.scatter(coords[high_risk, 0], coords[high_risk, 1],
-           s=14, alpha=0.8, color='#c0392b', label='riesgo alto (>= 7)')
+           s=14, alpha=0.8, color='#c0392b')
 ax.set_xlabel(f'PC1 ({var_pct[0]:.1f}%)')
 ax.set_ylabel(f'PC2 ({var_pct[1]:.1f}%)')
 ax.set_title('Proyeccion PCA de los estudiantes')
-ax.legend()
 fig.savefig(PLOT_DIR / 'pca_proyeccion.png', dpi=110, bbox_inches='tight')
 
 fig, ax = plt.subplots(figsize=(8, 6))
